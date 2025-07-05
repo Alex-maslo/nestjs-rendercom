@@ -12,10 +12,7 @@ export class ClinicsController {
   }
 
   @Get()
-  search(
-    @Query('search') search?: string,
-    @Query('sort') sort: 'ASC' | 'DESC' = 'ASC',
-  ) {
-    return this.clinicsService.search(search, sort);
+  search(@Query('search') search?: string) {
+    return this.clinicsService.search(search);
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ILike, Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { CreateClinicDto } from './dto/create-clinic.dto';
 import { Clinic } from './entities/clinic.entity';
 
@@ -16,13 +16,10 @@ export class ClinicsService {
     return this.clinicRepository.save(clinic);
   }
 
-  async search(
-    searchTerm = '',
-    sortOrder: 'ASC' | 'DESC' = 'ASC',
-  ): Promise<Clinic[]> {
+  async search(searchTerm = ''): Promise<Clinic[]> {
     return this.clinicRepository.find({
-      where: { name: ILike(`%${searchTerm}%`) },
-      order: { name: sortOrder },
+      where: { name: Like(`%${searchTerm}%`) },
+      order: { id: 'ASC' }, // 👈 Сортування по id за замовчуванням
     });
   }
 }
